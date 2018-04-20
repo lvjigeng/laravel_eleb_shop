@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    //申明商家登录时验证这个表
+    protected $table='shop_accounts';
 
     /**
      * The attributes that are mass assignable.

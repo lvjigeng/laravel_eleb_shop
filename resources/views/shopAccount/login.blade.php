@@ -20,6 +20,8 @@
 </head>
 <body>
 <div class="container">
+    @include('layout._errors')
+    @include('layout._messages')
     <div class="modal-dialog modal-sm" role="document" style="margin-top: 170px">
         <div class="modal-content">
             <div class="modal-header">

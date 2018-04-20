@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\ShopAccount;
 use App\Model\ShopDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ShopAccountController extends Controller
@@ -53,9 +54,35 @@ class ShopAccountController extends Controller
 
     }
     //登录
-    public function login()
+    public function login(Request $request)
     {
         if ($_POST){
+            //验证
+            $this->validate($request,[
+                'name'=>'required',
+                'password'=>'required',
+            ],[
+                'name.required'=>'用户名不能为空',
+                'password.required'=>'密码不能为空',
+            ]);
+            //判断密码与账号是否正确
+            if(Auth::attempt(['name'=>$request->name,'password'=>$request->password,],$request->has('rememberMe'))){
+
+                if (Auth::attempt(['status'=>true])){
+                    session()->flash('success','登录成功');
+                    return redirect()->route('shopDetail.index');
+                }
+                session()->flash('danger','账号未审核');
+                return back()->withInput();
+
+            }
+
+
+
+            session()->flash('danger','密码或用户名错误');
+            return back()->withInput();
+
+
 
         }else{
             return view('shopAccount/login');
