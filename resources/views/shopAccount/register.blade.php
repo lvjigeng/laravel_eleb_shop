@@ -23,39 +23,115 @@
 <div class="container">
     @include('layout._errors')
     @include('layout._messages')
-    <div class="modal-dialog modal-sm" role="document" style="margin-top: 170px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+    <div class="row">
+        <form action="{{route('registerSave')}}" method="post" enctype="multipart/form-data">
+            <div class="col-xs-6">
+                账号<input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="手机号"><br>
+                密码<input type="password" name="password" class="form-control" value="{{old('password')}}" placeholder="密码"><br>
+                确认密码<input type="password" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}" placeholder="确认密码" ><br>
+            <p><strong>商家详细信息</strong></p>
+                商户名称<input type="text" name="shop_name" class="form-control" value="{{old('shop_name')}}" placeholder="必填"><br>
+                商户分类 <select name="category_id"class="form-control">
+                    @foreach($shopCategories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                     </select><br>
+                起送金额<input type="text" name="start_send" class="form-control" value="{{old('start_send')}}" placeholder="必填"><br>
+                配送费<input type="text" name="send_cost" class="form-control" value="{{old('send_cost')}}" placeholder="必填"><br>
+                备注<input type="text" name="notice" class="form-control" value="{{old('notice')}}"><br>
+                优惠信息<textarea name="discount" class="form-control">{{old('discount')}}</textarea><br>
+                商户图片<input type="file" name="shop_img" value="{{old('shop_img')}}"><br>
+                <span style="color: red">注:必须上传图片,为商家logo</span>
             </div>
-            <div class="modal-body">
-                <form id="my_login_form" method="post" action="{{route('registerSave')}}">
-                    <div class="form-group">
+            <div class="col-xs-6" style="margin-top: 20px">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>是否是品牌</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="brand" value="1" >是
+                            </label>
+                            <label>
+                                <input type="radio" name="brand" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否准时送达</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="on_time" value="1" >是
+                            </label>
+                            <label>
+                                <input type="radio" name="on_time" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否蜂鸟配送</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="fengniao" value="1" checked>是
+                            </label>
+                            <label>
+                                <input type="radio" name="fengniao" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否保标记</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="bao" value="1" >是
+                            </label>
+                            <label>
+                                <input type="radio" name="bao" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否票标记</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="piao" value="1" >是
+                            </label>
+                            <label>
+                                <input type="radio" name="piao" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否准标记</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="zhun" value="1" >是
+                            </label>
+                            <label>
+                                <input type="radio" name="zhun" value="0" checked>不是
+                            </label>
+                        </td>
+                    </tr>
 
-                        <input type="text" class="form-control" placeholder="手机" name="name" value="{{old('name')}}">
-                    </div>
-                    <div class="form-group">
+                    <tr>
+                        <td>验证码</td>
+                        <td>
+                            <input type="text" id="captcha" name="captcha" class="form-control"  placeholder="验证码">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="注册" class="btn btn-primary btn-lg"></td>
 
-                        <input type="password" class="form-control"  placeholder="密码" name="password">
-                    </div>
+                        <td>
+                         <img class="thumbnail captcha" src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码"></td>
 
-                    <div class="form-group">
+                    </tr>
 
-                        <input type="password" class="form-control"  placeholder="确认密码" name="password_confirmation">
-                    </div>
-                    <div class="form-group">
-
-                        <input type="text" class="form-control" placeholder="店铺名字" name="shop_name" value="{{old('shop_name')}}">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="my_login_btn">注册</button>
-                    {{csrf_field()}}
-                </form>
+                </table>
             </div>
-
-        </div>
+            {{ csrf_field() }}
+        </form>
     </div>
-</div>
 
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->

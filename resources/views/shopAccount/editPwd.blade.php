@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <!--设置标题  默认为首页-->
-    <title>注册</title>
+    <title>修改密码</title>
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -26,33 +26,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">用户登录</h4>
+                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
             </div>
             <div class="modal-body">
-                <form id="my_login_form" method="post" action="{{route('login')}}">
+                <form id="my_login_form" method="post" action="{{route('editPwd',['shopAccount'=>$shopAccount])}}">
                     <div class="form-group">
 
-                        <input type="text" class="form-control" placeholder="手机" name="name" value="{{old('name')}}">
-                    </div>
-
-                    <div class="form-group">
-
-                        <input type="password" class="form-control"  placeholder="密码" name="password">
+                        <input type="text" class="form-control" placeholder="手机" name="name" value="{{$shopAccount->name}}" disabled>
                     </div>
 
                     <div class="form-group">
 
-                        <input type="text" id="captcha" name="captcha" class="form-control"  placeholder="验证码">
+                        <input type="password" class="form-control"  placeholder="原密码" name="password">
                     </div>
 
-                    <img class="thumbnail captcha" src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码">
+                    <div class="form-group">
 
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="rememberMe"> 记住下次的登录
-                        </label>
+                        <input type="password" class="form-control"  placeholder="新密码" name="new_password">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="my_login_btn">登录</button>
+
+                    <div class="form-group">
+
+                        <input type="password" class="form-control"  placeholder="确认新密码" name="new_password_confirmation">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" id="my_login_btn">修改</button>
                     {{csrf_field()}}
                 </form>
             </div>

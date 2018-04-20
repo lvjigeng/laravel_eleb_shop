@@ -32,7 +32,7 @@ class CreateShopDetailsTable extends Migration
             $table->decimal('send_cost')->default(0);//5,配送费
             $table->string('notice')->default('');//店公告
             $table->string('discount')->default('');//优惠信息
-            $table->integer('shop_category_id)')->default(0);//分类
+            $table->integer('shop_category_id')->default(0);//分类
             $table->timestamps();
         });
     }

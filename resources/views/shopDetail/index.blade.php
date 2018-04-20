@@ -4,14 +4,15 @@
 
     @section('content')
         <div class="row">
-            <form action="" method="post">
+            <form action="{{route('shopDetail.update',['shopDetail'=>$shopDetail])}}" method="post">
                 <div class="col-xs-6">
                     商户名称<input type="text" name="shop_name" class="form-control" value="{{$shopDetail->shop_name}}"><br>
                     起送金额<input type="text" name="start_send" class="form-control" value="{{$shopDetail->start_send}}"><br>
                     配送费<input type="text" name="send_cost" class="form-control" value="{{$shopDetail->send_cost}}"><br>
                     备注<input type="text" name="notice" class="form-control" value="{{$shopDetail->notice}}"><br>
                     优惠信息<textarea name="discount" class="form-control">{{$shopDetail->discount}}</textarea><br>
-                    商户图片<input type="file" name="shop_img"><br>
+                    商户图片 <img src="{{$shopDetail->shop_img}}" alt="" class="img-thumbnail" width="90px"><br>
+                    上传新图片<input type="file" name="shop_img"><br>
                 </div>
                 <div class="col-xs-6" style="margin-top: 20px">
                     <table class="table table-bordered">
@@ -30,7 +31,7 @@
                             <td>是否准时送达</td>
                             <td>
                                 <label>
-                                    <input type="radio" name="on_time" value="1" {{$shopDetail->zhun==1?'checked':''}}>是
+                                    <input type="radio" name="on_time" value="1" {{$shopDetail->on_time==1?'checked':''}}>是
                                 </label>
                                 <label>
                                     <input type="radio" name="on_time" value="0" {{$shopDetail->on_time==0?'checked':''}}>不是
@@ -85,7 +86,7 @@
                             <td colspan="2" style="text-align: center">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <input type="submit" value="添加" class="btn btn-primary btn-lg">
+                                        <input type="submit" value="修改" class="btn btn-primary btn-lg" id="edit">
                                     </div>
                                     <div class="col-xs-6">
                                         <a href="" class="btn btn-primary btn-lg">返回</a>
@@ -96,6 +97,16 @@
                     </table>
                 </div>
                 {{ csrf_field() }}
+                {{method_field('PUT')}}
             </form>
         </div>
     @stop
+
+@section('js')
+    <script>
+     $("#edit").click(function () {
+         confirm('确定修改');
+     })
+    </script>
+
+@stop
