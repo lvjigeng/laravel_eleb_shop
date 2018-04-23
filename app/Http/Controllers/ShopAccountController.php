@@ -6,6 +6,7 @@ use App\Model\ShopAccount;
 use App\Model\ShopCategory;
 use App\Model\ShopDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,11 @@ class ShopAccountController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['register','login']
+        'except' => ['register','registerSave','login']//游客只能看注册登录
+         ]);
+
+        $this->middleware('guest', [
+            'only' => ['register','login','registerSave']//登录就不不让看这几个页面
         ]);
     }
     //注册
@@ -57,11 +62,9 @@ class ShopAccountController extends Controller
 
         ]);
         //保存图片
-        $imgPath = $request->file('shop_img')->store('public/shopImg');
-        $imgPath = url(Storage::url($imgPath));
 
         //保存
-        DB::transaction(function () use ($request, $imgPath) {
+        DB::transaction(function () use ($request) {
 
             $ShopDetail = ShopDetail::create([
                 'shop_name' => $request->shop_name,
@@ -70,7 +73,7 @@ class ShopAccountController extends Controller
                 'send_cost' => $request->send_cost,
                 'notice' => $request->notice,
                 'discount' => $request->discount,
-                'shop_img' => $imgPath,
+                'shop_img' => $request->shop_img
             ]);
 
             ShopAccount::create([

@@ -33,6 +33,7 @@ class CreateShopDetailsTable extends Migration
             $table->string('notice')->default('');//店公告
             $table->string('discount')->default('');//优惠信息
             $table->integer('shop_category_id')->default(0);//分类
+//            $table->foreign('shop_category_id')->references('id')->on('shop_categories');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\ShopAccount;
 use App\Model\ShopDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -12,7 +13,14 @@ use function Sodium\crypto_box_publickey_from_secretkey;
 
 class ShopDetailController extends Controller
 {
-    //
+    //没登录什么都不能操作
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => []
+        ]);
+    }
+    //店铺详情
     public function index(ShopDetail $shopDetail)
     {
 
@@ -38,11 +46,6 @@ class ShopDetailController extends Controller
             'send_cost.required' => '配送金额不能为空',
         ]);
         //判断图片是否上传
-        if ($request->shop_img)
-        {
-            $imgPath = $request->file('shop_img')->store('public/shopImg');
-            $shopDetail->shop_img=url(Storage::url($imgPath));
-        }
         //保存修改
         $shopDetail->update([
            'shop_name'=>$request->shop_name,
@@ -50,7 +53,7 @@ class ShopDetailController extends Controller
            'send_cost'=>$request->send_cost,
            'notice'=>$request->notice,
            'discount'=>$request->discount,
-           'shop_img'=>$shopDetail->shop_img,
+           'shop_img'=>$request->shop_img,
            'brand'=>$request->brand,
            'on_time'=>$request->on_time,
            'fengniao'=>$request->fengniao,

@@ -15,8 +15,8 @@ class AddColumnToShopDetails extends Migration
     {
         //
         Schema::table('shop_details',function (Blueprint $table){
-            $table->tinyInteger('piao')->defauit(0);
-            $table->string('address')->defauit('');
+            $table->tinyInteger('piao')->default(0);
+            $table->string('address')->default('');
         });
     }
 
