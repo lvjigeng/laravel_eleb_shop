@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label for="exampleInputName2">食品价格</label>
-                <input type="number" name="price" class="form-control" id="exampleInputName2" placeholder="食品价格" value="{{$food->price}}">
+                <input type="text" name="price" class="form-control" id="exampleInputName2" placeholder="食品价格" value="{{$food->price}}">
             </div>
 
             <div class="form-group">

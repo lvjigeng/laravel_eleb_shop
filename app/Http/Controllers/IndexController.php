@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Activity;
 use App\Model\FoodCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class IndexController extends Controller
     {
 
         $this->middleware('auth', [
-            'except' => ['welcome']
+            'except' => ['welcome','show','qianShow']
         ]);
 
         $this->middleware('guest', [
@@ -22,14 +23,26 @@ class IndexController extends Controller
 
 
     }
-
+    //首页页面
     public function index()
     {
-
-      return view('index/index',compact('foodCategories'));
+        $activities=Activity::all();
+        return view('index/index',compact('activities'));
     }
+    //欢迎界面
     public function welcome()
     {
-        return view('index/welcome');
+        $activities=Activity::all();
+        return view('index/welcome',compact('activities'));
+    }
+
+
+    public function show(Activity $activity)
+    {
+        return view('index/show',compact('activity'));
+    }
+    public function qianShow(Activity $activity)
+    {
+        return view('index/qianShow',compact('activity'));
     }
 }

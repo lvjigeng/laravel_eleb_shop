@@ -10,12 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/upload','UploadController@upload');
+
+
+
 //登录首页
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','IndexController@welcome')->name('/');
 //店铺首页
 Route::get('index','IndexController@index')->name('index');
+//活动查看
+Route::get('show/{activity}','IndexController@show')->name('activity.show');
+Route::get('qainShow/{activity}','IndexController@qianShow')->name('activity.qianShow');
+
+//注册
 Route::get('register','ShopAccountController@register')->name('register');
 Route::post('registerSave','ShopAccountController@registerSave')->name('registerSave');
 //登录
@@ -29,3 +37,7 @@ Route::post('editPwd/{shopAccount}','ShopAccountController@editPwd')->name('edit
 
 //店铺详情
 Route::resource('shopDetail','ShopDetailController');
+//食品分类路由
+Route::resource('foodCategory','FoodCategoryController');
+//食品路由
+Route::resource('food','FoodController');

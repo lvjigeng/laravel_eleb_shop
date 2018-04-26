@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="exampleInputName2">默认选中</label>
                 是<input type="radio" name="is_selected" value="1">
-                否<input type="radio" name="is_selected" value="0"><br>
+                否<input type="radio" name="is_selected" value="0" checked><br>
                 <span style="color: red;font-size: 12px">注:进入店铺会默认看到该分类下的商品,但只能选择一个分类默认选中</span>
 
             </div>

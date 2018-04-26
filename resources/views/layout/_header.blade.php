@@ -15,9 +15,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{{route('shopDetail.index')}}">店铺详情 <span class="sr-only">(current)</span></a></li>
-                <li><a href="">分类管理</a></li>
+                <li><a href="{{route('foodCategory.index')}}">分类管理</a></li>
+                <li><a href="{{route('food.index')}}">食品管理</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="">消费记录</a></li>
 

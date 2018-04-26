@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use OSS\Core\OssException;
 
 class FoodController extends Controller
@@ -29,7 +30,16 @@ class FoodController extends Controller
     public function store(Request $request)
     {
             $this->validate($request,[
-               'name'=>'required|max:20',
+
+                'name'=>[
+                    'required',
+                    'max:20',
+                    Rule::unique('foods')->where(function ($query) use ($request){
+                $query->where([
+                        ['shop_detail_id',Auth::user()->shop_detail_id],
+                        ['food_category_id',$request->food_category_id]
+                    ]);
+                })],
                 'price'=>'required',
                 'food_img'=>'required',
                 'tips'=>'required|max:100',
@@ -39,6 +49,7 @@ class FoodController extends Controller
                 'price.required'=>'价格不能为空',
                 'tips.required'=>'描述不能为空',
                 'food_img.required'=>'请上传图片',
+                'name.unique'=>'该分类下名字已存在'
             ]);
             //保存图片
 
@@ -66,7 +77,7 @@ class FoodController extends Controller
     //修改
     public function edit(Food $food)
     {
-        $foodCategories=FoodCategory::where('id',Auth::user()->id)->get();
+        $foodCategories=FoodCategory::where('shop_detail_id',Auth::user()->id)->get();
         return view('food/edit',compact('food','foodCategories'));
     }
     //修改保存

@@ -9,6 +9,8 @@
     <title>注册</title>
 
     <!-- Bootstrap -->
+    <!--引入webUploader的CSS-->
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
@@ -40,10 +42,19 @@
                 配送费<input type="text" name="send_cost" class="form-control" value="{{old('send_cost')}}" placeholder="必填"><br>
                 备注<input type="text" name="notice" class="form-control" value="{{old('notice')}}"><br>
                 优惠信息<textarea name="discount" class="form-control">{{old('discount')}}</textarea><br>
-                商户图片<input type="file" name="shop_img" value="{{old('shop_img')}}"><br>
-                <span style="color: red">注:必须上传图片,为商家logo</span>
+
+
             </div>
             <div class="col-xs-6" style="margin-top: 20px">
+                <strong>商户图片</strong>  <input type="hidden" id="logo" name="shop_img" class="form-control"  value="">
+                <!--dom结构部分-->
+                <div id="uploader-demo">
+                    <!--用来存放item-->
+                    <div id="fileList" class="uploader-list"></div>
+                    <div id="filePicker">选择图片</div>
+                </div>
+                <img src="" id="img" alt="" class="img-rounded" width="150">
+                <p><span style="color: red">注:必须上传图片,为商家logo</span></p>
                 <table class="table table-bordered">
                     <tr>
                         <td>是否是品牌</td>
@@ -132,13 +143,49 @@
             {{ csrf_field() }}
         </form>
     </div>
-
+</div>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="/js/jquery-3.2.1.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="/js/bootstrap.min.js"></script>
 <!--设置js-->
-@yield('js')
+
+<!--引入webUploader的JS-->
+<script type="text/javascript" src="/webuploader/webuploader.js"></script>
+<script type="text/javascript">
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+        auto: true,
+
+        // swf文件路径
+        swf: '/webuploader/Uploader.swf',
+
+        // 文件接收服务端。
+        server: '/upload',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+        formData:{'_token':"{{csrf_token()}}",'dir':"public/shopImg"},
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+
+
+
+    uploader.on( 'uploadSuccess', function( file,response ) {
+//                $( '#'+file.id ).addClass('upload-state-done');
+        var url=response.url;
+        $('#img').attr('src',url);
+        $('#logo').val(url);
+    });
+</script>
 </body>
 </html>
