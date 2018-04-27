@@ -15,13 +15,13 @@
                 <textarea name="description"  cols="10" rows="4" class="form-control" placeholder="分类描述"></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="exampleInputName2">默认选中</label>
-                是<input type="radio" name="is_selected" value="1">
-                否<input type="radio" name="is_selected" value="0" checked><br>
-                <span style="color: red;font-size: 12px">注:进入店铺会默认看到该分类下的商品,但只能选择一个分类默认选中</span>
+            {{--<div class="form-group">--}}
+                {{--<label for="exampleInputName2">默认选中</label>--}}
+                {{--是<input type="radio" name="is_selected" value="1">--}}
+                {{--否<input type="radio" name="is_selected" value="0" checked><br>--}}
+                {{--<span style="color: red;font-size: 12px">注:进入店铺会默认看到该分类下的商品,但只能选择一个分类默认选中</span>--}}
 
-            </div>
+            {{--</div>--}}
 
             <button type="submit" class="btn btn-default">添加</button>
 

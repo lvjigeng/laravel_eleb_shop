@@ -35,14 +35,20 @@ class FoodCategoryController extends Controller
         ]);
         //保存
         $foodCategory=FoodCategory::create([
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'is_selected'=>$request->is_selected,
-            'shop_detail_id'=>Auth::user()->id
+        'name'=>$request->name,
+        'description'=>$request->description,
+        'is_selected'=>true,
+        'shop_detail_id'=>Auth::user()->id
         ]);
+        //
         DB::table('food_categories')
             ->where('id','<>',$foodCategory->id)
-            ->update(['is_selected'=>!$request->is_selected]);
+            ->update(['is_selected'=>false]);
+        //修改分类组c1,c2
+        $foodCategory
+            ->where('id',$foodCategory->id)
+            ->update(['type_accumulation'=>'c'.$foodCategory->id]);
+
         //保存成功提示
         session()->flash('success','添加成功');
         return redirect()->route('foodCategory.index');
