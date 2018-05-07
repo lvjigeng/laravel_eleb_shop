@@ -35,8 +35,8 @@ class IndexController extends Controller
     //欢迎界面
     public function welcome()
     {
-        $activities=Activity::all();
-        return view('index/welcome',compact('activities'));
+
+        return view('index/welcome');
     }
 
     //查看活动
