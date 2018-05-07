@@ -39,6 +39,7 @@ class ShopAccountController extends Controller
         $this->validate($request, [
             'name' => 'required|regex:/^1[34578][0-9]{9}$/
 ',
+            'email'=>'required|regex:/\w+([-+.\']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/|unique:shopAccounts',
             'password' => 'required|confirmed|min:6',
             'shop_name' => 'required|unique:shop_details',
             'start_send' => 'required',
@@ -49,6 +50,9 @@ class ShopAccountController extends Controller
         ], [
             'name.required' => '手机号不能为空',
             'name.regex' => '请输入正确的手机号',
+            'email.required'=>'邮箱不能为空',
+            'email.regex'=>'邮箱格式不正确',
+            'email.unique'=>'邮箱已存在',
             'password.required' => '密码不能为空',
             'password.min' => '密码最小6位',
             'password.confirmed' => '两次密码不一致',
@@ -78,6 +82,7 @@ class ShopAccountController extends Controller
 
             ShopAccount::create([
                 'name' => $request->name,
+                'email'=>$request->email,
                 'password' => bcrypt($request->password),
                 'shop_detail_id' => $ShopDetail->id,
             ]);

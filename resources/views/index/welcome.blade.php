@@ -83,11 +83,11 @@
                 <div class="title m-b-md">
                     Welcome  Eleb
                 </div>
-                <dl>
-                @foreach($activities as $activity)
-                    <dt><a href="{{route('activity.qianShow',['activity'=>$activity])}}">{{$activity->title}}</a></dt>
-                @endforeach
-                </dl>
+                {{--<dl>--}}
+                {{--@foreach($activities as $activity)--}}
+                    {{--<dt ><a href="{{route('activity.qianShow',['activity'=>$activity])}}">{{$activity->title}}</a></dt>--}}
+                {{--@endforeach--}}
+                {{--</dl>--}}
                 <div class="links">
                     <a href="{{route('register')}}">注册</a>
 
