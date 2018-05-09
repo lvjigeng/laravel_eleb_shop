@@ -36,7 +36,7 @@
 
             <div class="form-group">
                 <label for="exampleInputName2">新图片</label>
-                <input type="text" id="logo" name="food_img" class="form-control" value="{{$food->food_img}}">
+                <input type="hidden" id="logo" name="food_img" class="form-control" value="{{$food->food_img}}">
                 <!--dom结构部分-->
                 <div id="uploader-demo">
                     <!--用来存放item-->
