@@ -38,7 +38,6 @@ class IndexController extends Controller
 
         return view('index/welcome');
     }
-
     //查看活动
     public function show(Activity $activity)
     {
@@ -55,6 +54,25 @@ class IndexController extends Controller
     //活动报名
     public function signUp(Request $request)
     {
+        //已报名人数
+        $count = ActivityMember::where('activity_id', $request->activity_id)->count();
+        //这个店铺报名没
+        $is_signup=ActivityMember::where([
+            ['activity_id', $request->activity_id],
+            ['shopAccount_id',Auth::user()->id]
+        ])->count();
+        //判断是否已报名
+        if ($is_signup){
+            session()->flash('success','您已报名,不能重复报名');
+            return back();
+        }
+        //限制报名人数
+        $signup_num=Activity::find($request->activity_id)->signup_num;
+        if ($count>=$signup_num){
+            session()->flash('success','报名人数已满');
+            return back();
+        }
+
         ActivityMember::create([
             'activity_id'=>$request->activity_id,
             'shopAccount_id'=>Auth::user()->id
@@ -62,12 +80,15 @@ class IndexController extends Controller
         session()->flash('success','报名成功');
         return back();
     }
-
+    //中奖名单
     public function winning(Request $request)
     {
 
         //获取活动对应的中奖名单
-        $winning = ActivityPrize::where('activity_id', $request->activity_id)->get();
+        $winning = ActivityPrize::where([
+            ['activity_id', $request->activity_id],
+            ['shopAccount_id','<>','']
+        ])->get();
 //        dd($winning);
         foreach ($winning as $value) {
             $value->shopAccount_name=ShopAccount::where('id',$value->shopAccount_id)->first()->name;
